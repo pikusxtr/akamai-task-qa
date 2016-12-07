@@ -1,4 +1,5 @@
-# Akamai task QA
+# Akamai task QA<br>
+
 Prerequisites to run the tests:
 * Windows 7x64 or 10x64
 * The latest FireFox version installed in default location
