@@ -4,7 +4,7 @@ Prerequisites to run the tests:
 * The latest FireFox version installed
 * maven 3.3.9 or higher installed
 
-open command line
+open command line <br>
 navigate to the project root folder where pom.xml is located
 execute command:
 mvn clean install
