@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MainPage extends AbstractPage {
 
-    private static final int TIMEOUT = 7;
+    //private static final int TIMEOUT = 7;
     private List<WebElement> searchResultsList;
 
     @FindBy(id = "keyword")
@@ -33,6 +33,7 @@ public class MainPage extends AbstractPage {
 
     private By pageVisible =
             By.cssSelector("div#job_results_list_hldr, div#job_no_results_list_hldr");
+    private By textToGetFromLocation = By.cssSelector("ul.chzn-results > li.active-result");
 
     private String url;
 
@@ -71,25 +72,13 @@ public class MainPage extends AbstractPage {
 
     public MainPage enterLocation(String location) {
         locationsField.click();
-        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
-
-        WebElement locationTextInputElem =
-                wait.until(ExpectedConditions.presenceOfElementLocated(locationTextInput));
-        setElementText(locationTextInputElem, location);
+        setElementText(waitForElementPresent(locationTextInput), location);
         return this;
     }
 
-    //refactor method, extract wait
+
     public MainPage selectLocationFromResults(Locations location) {
-        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
-        By textToGetFromLocation = By.cssSelector("ul.chzn-results > li.active-result");
-        List<WebElement> locationResultsContainerActiveElem =
-                wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(textToGetFromLocation));
-        locationResultsContainerActiveElem.forEach(
-                webElement -> {
-                    if (webElement.getText().contentEquals(location.getFullLocationName()))
-                        webElement.click();
-                });
+        clickListElementWithText(textToGetFromLocation, location.getFullLocationName());
         return this;
     }
 
